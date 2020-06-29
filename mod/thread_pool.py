@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-
 '''
 @Author: Sphantix Hang
 @Date: 2020-04-24 16:45:13
-@LastEditors: Sphantix Hang
-@LastEditTime: 2020-04-24 17:30:24
-@FilePath: /urldownload/threadpool.py
+@LastEditors: Rodney Cheung
+@LastEditTime: 2020-06-29 10:42:27
+@FilePath: /python-mod/core/thread_pool.py
 '''
 
 import queue
@@ -16,8 +15,9 @@ import time
 
 StopEvent = object()
 
+
 class ThreadPool(object):
-    def __init__(self, max_num, max_task_num = None):
+    def __init__(self, max_num, max_task_num=None):
         if max_task_num:
             self.q = queue.Queue(max_task_num)
         else:
@@ -40,7 +40,11 @@ class ThreadPool(object):
             return
         if len(self.free_list) == 0 and len(self.generate_list) < self.max_num:
             self.generate_thread()
-        w = (func, args, callback,)
+        w = (
+            func,
+            args,
+            callback,
+        )
         self.q.put(w)
 
     def generate_thread(self):
