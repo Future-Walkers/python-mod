@@ -4,7 +4,7 @@
 @Author: Rodney Cheung
 @Date: 2020-06-24 09:14:52
 @LastEditors: Rodney Cheung
-@LastEditTime: 2020-06-29 15:23:02
+@LastEditTime: 2020-06-30 18:10:01
 @FilePath: /python-mod/setup.py
 '''
 import setuptools
@@ -25,6 +25,25 @@ setuptools.setup(
     long_description_content_type = 'text/markdown',
     url = 'https://github.com/Future-Walkers/python-mod',
     license = license,
-    packages = setuptools.find_packages(),
+    packages = setuptools.find_packages('src'),
+    package_dir={'': 'src'},
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: Unix',
+        'Operating System :: POSIX',
+        'Operating System :: Microsoft :: Windows',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
+        'Topic :: Utilities',
+    ],
     zip_safe = False
 )
