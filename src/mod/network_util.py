@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-'''
+"""
 @Author: Rodney Cheung
 @Date: 2020-06-29 10:37:23
 @LastEditors: Rodney Cheung
 @LastEditTime: 2020-06-29 11:00:20
 @FilePath: /python-mod/core/network_util.py
-'''
+"""
 import socket
 import random
 import urllib.request
@@ -26,11 +26,12 @@ const.USER_AGENT = {
     ],
 }
 
+
 def get_ip_from_url(url):
     netloc = urlparse(url).netloc
     domain = netloc.split(":")[0]
     addr = socket.getaddrinfo(domain, 'http')
-    return (addr[0][4][0])
+    return addr[0][4][0]
 
 
 def check_url_access(url):

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-'''
+"""
 @Author: Sphantix Hang
 @Date: 2020-04-24 16:45:13
 @LastEditors: Rodney Cheung
 @LastEditTime: 2020-06-29 10:42:27
 @FilePath: /python-mod/core/thread_pool.py
-'''
+"""
 
 import queue
 import threading
