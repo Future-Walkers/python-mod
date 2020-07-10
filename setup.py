@@ -4,10 +4,13 @@
 @Author: Rodney Cheung
 @Date: 2020-06-24 09:14:52
 @LastEditors: Rodney Cheung
-@LastEditTime: 2020-06-30 18:10:01
+@LastEditTime: 2020-07-01 09:25:48
 @FilePath: /python-mod/setup.py
 '''
 import setuptools
+from os.path import splitext
+from os.path import basename
+from glob import glob
 
 with open('README.md', 'r') as f:
     long_description = f.read()
@@ -16,17 +19,18 @@ with open('LICENSE') as f:
     license = f.read()
 
 setuptools.setup(
-    name = 'mod',
-    version = '0.0.1',
-    author = 'wq',
-    author_email = 'wq@antiy.cn',
-    description = 'python wrappers',
-    long_description = long_description,
-    long_description_content_type = 'text/markdown',
-    url = 'https://github.com/Future-Walkers/python-mod',
-    license = license,
-    packages = setuptools.find_packages('src'),
+    name='mod',
+    version='0.0.1',
+    author='wq',
+    author_email='wq@antiy.cn',
+    description='python wrappers',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url='https://github.com/Future-Walkers/python-mod',
+    license=license,
+    packages=setuptools.find_packages('src'),
     package_dir={'': 'src'},
+    py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
@@ -45,5 +49,4 @@ setuptools.setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Utilities',
     ],
-    zip_safe = False
-)
+    zip_safe=False)
