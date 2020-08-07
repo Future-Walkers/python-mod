@@ -19,10 +19,10 @@ with open('LICENSE') as f:
     license = f.read()
 
 setuptools.setup(
-    name='mod',
+    name='wisbec',
     version='0.0.1',
-    author='wq',
-    author_email='wq@antiy.cn',
+    author='rodneycheung',
+    author_email='jsrdzhk@gmail.com',
     description='python wrappers',
     long_description=long_description,
     long_description_content_type='text/markdown',
