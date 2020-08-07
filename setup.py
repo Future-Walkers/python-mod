@@ -20,7 +20,7 @@ with open('LICENSE') as f:
 
 setuptools.setup(
     name='wisbec',
-    version='0.0.1',
+    version='0.0.2',
     author='rodneycheung',
     author_email='jsrdzhk@gmail.com',
     description='python wrappers',
@@ -31,6 +31,7 @@ setuptools.setup(
     packages=setuptools.find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
+    platforms=['any'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

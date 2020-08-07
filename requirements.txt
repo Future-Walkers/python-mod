@@ -1,2 +1,3 @@
 sshtunnel
 pymysql
+wisbec==0.0.2

@@ -8,10 +8,9 @@
 @FilePath: /python-mod/core/thread_pool.py
 """
 
+import contextlib
 import queue
 import threading
-import contextlib
-import time
 
 StopEvent = object()
 
