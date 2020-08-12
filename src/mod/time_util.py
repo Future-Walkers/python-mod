@@ -8,22 +8,29 @@
 @FilePath: /python-mod/core/time_util.py
 """
 
-import datetime
 import time
 
 
-def format_time_use(time):
-    m, s = divmod(time, 60)
+def format_seconds(seconds, time_format):
+    """
+    convert seconds to specified format
+    Args:
+        seconds: seconds
+        time_format: specified time format,hour minute & second
+        can be used
+
+    Returns:
+        formatted time str
+    """
+    m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
-    if h > 0:
-        return "Cost: %dh%02dm%02ds" % (h, m, s)
-    elif m > 0:
-        return "Cost: %02dm%02ds" % (m, s)
-    else:
-        return "Cost: %02ds" % s
+    return str(time_format).format(h, m, s)
 
 
 def get_current_timestamp():
-    return time.mktime(
-        time.strptime(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                      "%Y-%m-%d %H:%M:%S"))
+    """
+    get current timestamp
+    Returns:
+        current timestamp
+    """
+    return time.time()
