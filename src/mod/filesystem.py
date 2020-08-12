@@ -64,3 +64,20 @@ def get_file_md5(file_full_path):
 
 def create_zip_file(output_full_path, input_dir):
     shutil.make_archive(output_full_path, 'zip', input_dir)
+
+
+def replace_extension(file_path, replacement):
+    """
+    replace file name's extension
+    Args:
+        file_path: file path
+        replacement: target extension
+
+    Returns:
+        replaced file name
+    """
+    base_name, extension = os.path.splitext(file_path)
+    if len(replacement) == 0:
+        return base_name
+    else:
+        return base_name + '.' + replacement

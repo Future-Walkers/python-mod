@@ -48,6 +48,12 @@ class TestFilesystem(unittest.TestCase):
         filesystem.create_zip_file(os.path.join(self.test_data_dir, 'test.zip'),
                                    os.path.join(os.path.pardir, 'mod'))
 
+    def test_replace_extension(self):
+        self.assertEqual(filesystem.replace_extension(os.path.join(os.getcwd(), 'requirements.txt'), ''),
+                         os.path.join(os.getcwd(), 'requirements'))
+        self.assertEqual(filesystem.replace_extension(os.path.join(os.getcwd(), 'requirements.txt'), 'png'),
+                         os.path.join(os.getcwd(), 'requirements.png'))
+
 
 if __name__ == '__main__':
     unittest.main()
