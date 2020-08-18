@@ -20,7 +20,7 @@ with open('LICENSE') as f:
 
 setuptools.setup(
     name='wisbec',
-    version='0.0.3',
+    version='0.0.4',
     author='rodneycheung',
     author_email='jsrdzhk@gmail.com',
     description='python wrappers',
