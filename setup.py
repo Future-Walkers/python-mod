@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-'''
+"""
 @Author: Rodney Cheung
 @Date: 2020-06-24 09:14:52
 @LastEditors: Rodney Cheung
 @LastEditTime: 2020-07-01 09:25:48
 @FilePath: /python-mod/setup.py
-'''
+"""
 import setuptools
 from os.path import splitext
 from os.path import basename
@@ -20,7 +20,7 @@ with open('LICENSE') as f:
 
 setuptools.setup(
     name='wisbec',
-    version='0.0.2',
+    version='0.0.3',
     author='rodneycheung',
     author_email='jsrdzhk@gmail.com',
     description='python wrappers',
