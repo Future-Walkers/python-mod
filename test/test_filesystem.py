@@ -42,7 +42,8 @@ class TestFilesystem(unittest.TestCase):
         self.assertEqual(filesystem.is_file_exist(self.test_file), False)
 
     def test_get_file_md5(self):
-        md5 = filesystem.get_file_md5(self.test_filesystem_py)
+        print(filesystem.get_file_md5('/home/rodneycheung/.mitmproxy/mitmproxy-ca-cert.pem'))
+        print(filesystem.get_file_md5('/home/rodneycheung/workspace/Tweezer/tweezer/src/c8750f0d.0'))
 
     def test_create_zip_file(self):
         filesystem.create_zip_file(os.path.join(self.test_data_dir, 'test.zip'),

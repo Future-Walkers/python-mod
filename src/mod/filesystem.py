@@ -12,15 +12,39 @@ import shutil
 import hashlib
 
 
-def is_directory_exist(dir_full_path):
-    return os.path.exists(dir_full_path) and os.path.isdir(dir_full_path)
+def is_directory_exist(dir_full_path) -> bool:
+    """
+    symbolic link or dir
+    Args:
+        dir_full_path: dir path
+
+    Returns:
+
+    """
+    return os.path.isdir(dir_full_path)
 
 
-def is_file_exist(file_full_path):
-    return os.path.exists(file_full_path) and os.path.isfile(file_full_path)
+def is_file_exist(file_full_path) -> bool:
+    """
+    symbolic link or file
+    Args:
+        file_full_path:file path
+
+    Returns:
+
+    """
+    return os.path.isfile(file_full_path)
 
 
-def create_directory(dir_full_path):
+def create_directories(dir_full_path):
+    """
+    create directory recursively
+    Args:
+        dir_full_path: dir path
+
+    Returns:
+
+    """
     if not is_directory_exist(dir_full_path):
         os.makedirs(dir_full_path)
 
