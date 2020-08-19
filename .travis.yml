@@ -1,4 +1,10 @@
+dist: focal
 language: python
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "nightly"
 git:
   depth: 3
   submodules: true
@@ -6,6 +12,6 @@ branches:
   only:
     - master
 install:
-  - sudo pip3 install -r requirements.txt
+  - sudo pip install -r requirements.txt
 script:
   - sudo python3 setup.py install
