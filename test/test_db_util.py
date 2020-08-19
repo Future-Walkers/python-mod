@@ -5,9 +5,9 @@
 @Date: 2020-06-30 09:58:50
 @LastEditors: Rodney Cheung
 @LastEditTime: 2020-07-01 09:39:11
-@FilePath: /python-mod/test/test_db_util.py
+@FilePath: /python-wisbec/test/test_db_util.py
 """
-from mod.db_util import MySqlDataBase
+from wisbec.database.db import MySqlDataBase
 import unittest
 
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
+
 """
-@Author: Rodney Cheung
-@Date: 2020-06-29 10:31:03
-@LastEditors: Rodney Cheung
-@LastEditTime: 2020-06-29 10:41:21
-@FilePath: /python-mod/core/time_util.py
+@Time    : 8/18/20 2:05 PM
+@Author  : Rodney Cheung
+@File    : time.py
+@Software: PyCharm
 """
 
 import time
@@ -34,3 +34,7 @@ def get_current_timestamp():
         current timestamp
     """
     return time.time()
+
+
+def now(time_format: str) -> str:
+    return time.strftime(time_format, time.localtime())

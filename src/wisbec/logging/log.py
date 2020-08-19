@@ -12,8 +12,10 @@ import logging
 import os
 import time
 import traceback
-from mod import filesystem
+
 from colorlog import ColoredFormatter
+
+from wisbec.file import filesystem
 
 
 class MyLogger(logging.Logger):

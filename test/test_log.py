@@ -12,7 +12,7 @@ import logging
 import os
 import unittest
 
-from mod.log import Log
+from wisbec.logging.log import Log
 
 
 class TestLog(unittest.TestCase):

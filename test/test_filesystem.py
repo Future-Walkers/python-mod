@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
-@Author: Rodney Cheung
-@Date: 2020-06-30 18:30:55
-@LastEditors: Rodney Cheung
-@LastEditTime: 2020-07-02 09:18:01
-@FilePath: /python-mod/test/test_filesystem.py
+# File       : test_filesystem.py
+# Time       ：2020/8/19 15:53
+# Author     ：Rodney Cheung
 """
+import os
 import unittest
 
-from mod import filesystem
-import os
+from wisbec.file import filesystem
 
 
 class TestFilesystem(unittest.TestCase):
@@ -29,7 +27,7 @@ class TestFilesystem(unittest.TestCase):
         # test is_file_exist
         self.assertEqual(filesystem.is_file_exist(self.test_filesystem_py), True)
         # test create_directory
-        filesystem.create_directory(self.test_dir)
+        filesystem.create_directories(self.test_dir)
         self.assertEqual(filesystem.is_directory_exist(self.test_dir), True)
         # test remove directory
         filesystem.remove(self.test_dir)
@@ -41,19 +39,15 @@ class TestFilesystem(unittest.TestCase):
         filesystem.remove(self.test_file)
         self.assertEqual(filesystem.is_file_exist(self.test_file), False)
 
-    def test_get_file_md5(self):
-        print(filesystem.get_file_md5('/home/rodneycheung/.mitmproxy/mitmproxy-ca-cert.pem'))
-        print(filesystem.get_file_md5('/home/rodneycheung/workspace/Tweezer/tweezer/src/c8750f0d.0'))
-
-    def test_create_zip_file(self):
-        filesystem.create_zip_file(os.path.join(self.test_data_dir, 'test.zip'),
-                                   os.path.join(os.path.pardir, 'mod'))
-
     def test_replace_extension(self):
         self.assertEqual(filesystem.replace_extension(os.path.join(os.getcwd(), 'requirements.txt'), ''),
                          os.path.join(os.getcwd(), 'requirements'))
         self.assertEqual(filesystem.replace_extension(os.path.join(os.getcwd(), 'requirements.txt'), 'png'),
                          os.path.join(os.getcwd(), 'requirements.png'))
+
+    def test_list_dir_recursively(self):
+        res = filesystem.list_dir_recursively('/Users/jsrdzhk/PycharmProjects', '.xml')
+        print(res)
 
 
 if __name__ == '__main__':

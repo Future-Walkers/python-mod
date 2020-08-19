@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
-@Author: Sphantix Hang
-@Date: 2020-04-24 16:45:13
-@LastEditors: Rodney Cheung
-@LastEditTime: 2020-06-29 10:42:27
-@FilePath: /python-mod/core/thread_pool.py
+# File       : thread_pool.py
+# Time       ：2020/8/19 15:09
+# Author     ：Rodney Cheung
 """
 
 import contextlib
@@ -101,7 +99,7 @@ class ThreadPool(object):
         self.q.empty()
 
     def is_busy(self):
-        return (len(self.generate_list) > 0)
+        return len(self.generate_list) > 0
 
     @contextlib.contextmanager
     def worker_state(self, state_list, worker_thread):

@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
-@Author: Sphantix Hang
-@Date: 2020-04-22 11:11:08
-@LastEditors: Rodney Cheung
-@LastEditTime: 2020-06-29 10:24:50
-@FilePath: /python-mod/core/const.py
+# File       : const.py
+# Time       ：2020/8/19 15:15
+# Author     ：Rodney Cheung
 """
 import sys
 

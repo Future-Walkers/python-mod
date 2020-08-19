@@ -7,15 +7,15 @@
 # Author     ：Rodney Cheung
 """
 import unittest
-from mod import time_util
+from wisbec.date import time
 
 
 class TestTimeUtil(unittest.TestCase):
     def test_format_time_use(self):
-        print(time_util.format_seconds(100, '{:d}h{:d}m{:d}s'))
+        print(time.format_seconds(100, '{:d}h{:d}m{:d}s'))
 
     def test_get_current_timestamp(self):
-        print(time_util.get_current_timestamp())
+        print(time.get_current_timestamp())
 
 
 if __name__ == '__main__':

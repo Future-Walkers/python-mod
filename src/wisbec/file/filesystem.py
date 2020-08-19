@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
-@Author: Rodney Cheung
-@Date: 2020-06-29 10:29:37
-@LastEditors: Rodney Cheung
-@LastEditTime: 2020-06-29 10:33:00
-@FilePath: /python-mod/core/filesystem.py
+# File       : filesystem.py
+# Time       ：2020/8/19 15:09
+# Author     ：Rodney Cheung
 """
 import os
 import shutil
-import hashlib
 
 
 def is_directory_exist(dir_full_path) -> bool:
@@ -72,24 +69,6 @@ def copy_file(src_full_path, dst_full_path):
     shutil.copy2(src_full_path, dst_full_path)
 
 
-def get_file_md5(file_full_path):
-    if not os.path.isfile(file_full_path):
-        return
-    md5hash = hashlib.md5()
-    with open(file_full_path, 'rb') as f:
-        while True:
-            b = f.read(8096)
-            if not b:
-                break
-            md5hash.update(b)
-
-    return md5hash.hexdigest()
-
-
-def create_zip_file(output_full_path, input_dir):
-    shutil.make_archive(output_full_path, 'zip', input_dir)
-
-
 def replace_extension(file_path, replacement):
     """
     replace file name's extension
@@ -105,3 +84,25 @@ def replace_extension(file_path, replacement):
         return base_name
     else:
         return base_name + '.' + replacement
+
+
+def list_dir_recursively(path: str, include_ext_name=None) -> list:
+    """
+    list files on path
+    Args:
+        path: target path
+        include_ext_name: include extensions,if None,all files are listed
+
+    Returns:
+        file lists
+    """
+    files = os.listdir(path)
+    res = list()
+    for file in files:
+        filepath = os.path.join(path, file)
+        if os.path.isdir(filepath):
+            res.extend(list_dir_recursively(filepath, include_ext_name))
+        else:
+            if (include_ext_name is None) or (include_ext_name is not None and filepath.endswith(include_ext_name)):
+                res.append(filepath)
+    return res

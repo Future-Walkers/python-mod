@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
-@Author: Rodney Cheung
-@Date: 2020-06-29 11:02:22
-@LastEditors: Rodney Cheung
-@LastEditTime: 2020-06-30 09:58:10
-@FilePath: /python-mod/mod/db_util.py
+@Time    : 8/18/20 1:56 PM
+@Author  : Rodney Cheung
+@File    : db.py
 """
 import sqlite3
-from sshtunnel import SSHTunnelForwarder
+
 import pymysql
+from sshtunnel import SSHTunnelForwarder
 
 
 class DataBase(object):
