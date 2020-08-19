@@ -1,0 +1,11 @@
+language: python
+git:
+  depth: 3
+  submodules: true
+branches:
+  only:
+    - master
+install:
+  - sudo pip3 install -r requirements.txt
+script:
+  - sudo python3 setup.py install
