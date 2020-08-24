@@ -9,6 +9,13 @@
 import subprocess
 
 
+def __decode(content):
+    try:
+        return content.decode('utf-8')
+    except UnicodeDecodeError:
+        return content.decode('gb2312')
+
+
 def exec_cmd(cmd, cwd=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
     try:
         subp = subprocess.Popen(cmd, shell=shell, stdout=stdout, stderr=stderr, cwd=cwd)
@@ -19,7 +26,7 @@ def exec_cmd(cmd, cwd=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shel
     normal = None
     error = None
     if out is not None:
-        normal = out.decode(errors='ignore')
+        normal = __decode(out)
     if err is not None:
-        error = err.decode()
+        error = __decode(err)
     return subp.returncode, normal, error

@@ -38,29 +38,65 @@ class Interface:
         for block in list_blocks:
             if ('inet ' not in block) or ('loop ' in block):
                 continue
-            it_name = re.search(r'(\S+):', block).groups()[0]
-            it_ip = re.search(r'inet (\S+) ', block).groups()[0].replace('addr:', '')
-            list_interface.append((it_name, it_ip))
+            iface_name = re.search(r'(\S+):', block).groups()[0]
+            iface_ip = re.search(r'inet (\S+) ', block).groups()[0].replace('addr:', '')
+            list_interface.append((iface_name, iface_ip))
         return list_interface
 
     @classmethod
     def __get_interface_from_ipconfig(cls) -> list:
+        """
+        Windows IP Configuration
+
+        Ethernet adapter 以太网:
+
+           Media State . . . . . . . . . . . : Media disconnected
+           Connection-specific DNS Suffix  . :
+
+        Wireless LAN adapter 本地连接* 2:
+
+           Media State . . . . . . . . . . . : Media disconnected
+           Connection-specific DNS Suffix  . :
+
+        Wireless LAN adapter WLAN:
+
+           Connection-specific DNS Suffix  . :
+           IPv4 Address. . . . . . . . . . . : 10.251.0.49
+           Subnet Mask . . . . . . . . . . . : 255.255.254.0
+           Default Gateway . . . . . . . . . : 10.251.0.1
+
+        Ethernet adapter 蓝牙网络连接:
+
+           Media State . . . . . . . . . . . : Media disconnected
+           Connection-specific DNS Suffix  . :
+        """
         interface_list = []
-        code, out, err = shell.exec_cmd(['cmd.exe', '/c', 'ipconfig'])
-        out = out.replace('\n{2,}', '\n')
-        list_blocks = re.split('\n[a-zA-Z0-9]', out)
+        code, out, err = shell.exec_cmd(['cmd.exe', '/c', 'chcp 65001 & ipconfig'])
+        if code != 0:
+            return interface_list
+        out = re.sub(r'(\r\n){2,}', r'\r\n', out)
+        list_blocks = re.split(r'\r\n[a-zA-Z0-9]', out)
         for block in list_blocks:
             if 'IPv4 Address' not in block:
                 continue
-            iface_name_group = re.search(r'(\S+):', block).groups()
-            iface_name = iface_name_group[0]
-            iface_ip_group = re.search(r'IPv4 Address(. )+:', block).groups()
-            iface_ip=iface_ip_group[0]
-            interface_list.append((iface_name,iface_ip))
+            iface_name_group_span = re.search(r'(\S+):', block).span()
+            iface_name = block[iface_name_group_span[0]:iface_name_group_span[1]].replace(':', '')
+            search_res = re.search(r'IPv4 Address(. )+: \S+', block)
+            if search_res is None:
+                continue
+            search_res_span = search_res.span()
+            ip_addr = block[search_res_span[0]:search_res_span[1]]
+            ip_addr = ip_addr.split(': ')[-1]
+            interface_list.append((iface_name, ip_addr))
         return interface_list
 
     @classmethod
     def get_active_interfaces(cls) -> list:
+        """
+        get active net interface,support mac os,linux an windows
+        Returns:
+            [(iface_name1,iface_ip1),...]
+        """
         current_os = sys.platform
         if current_os == 'win32':
             return cls.__get_interface_from_ipconfig()
