@@ -7,4 +7,4 @@ def get_newline_ch() -> str:
     if current_os == 'win32':
         return '\r\n'
     else:
-        return '\r'
+        return '\n'
