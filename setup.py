@@ -19,11 +19,11 @@ with open('LICENSE') as f:
 
 setuptools.setup(
     name='wisbec',
-    version='0.0.5',
+    version='0.1.0',
     author='rodneycheung',
     author_email='jsrdzhk@gmail.com',
     description='python wrappers',
-    long_description=long_description,
+    long_description='python wrappers',
     long_description_content_type='text/markdown',
     url='https://github.com/Future-Walkers/python-mod',
     license=lic,
