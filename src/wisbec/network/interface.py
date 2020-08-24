@@ -45,7 +45,19 @@ class Interface:
 
     @classmethod
     def __get_interface_from_ipconfig(cls) -> list:
-        return []
+        interface_list = []
+        code, out, err = shell.exec_cmd(['cmd.exe', '/c', 'ipconfig'])
+        out = out.replace('\n{2,}', '\n')
+        list_blocks = re.split('\n[a-zA-Z0-9]', out)
+        for block in list_blocks:
+            if 'IPv4 Address' not in block:
+                continue
+            iface_name_group = re.search(r'(\S+):', block).groups()
+            iface_name = iface_name_group[0]
+            iface_ip_group = re.search(r'IPv4 Address(. )+:', block).groups()
+            iface_ip=iface_ip_group[0]
+            interface_list.append((iface_name,iface_ip))
+        return interface_list
 
     @classmethod
     def get_active_interfaces(cls) -> list:
