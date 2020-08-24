@@ -31,6 +31,7 @@ setuptools.setup(
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     platforms=['any'],
+    install_requires=['sshtunnel', 'pymysql', 'colorlog'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
