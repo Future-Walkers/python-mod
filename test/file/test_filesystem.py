@@ -49,6 +49,16 @@ class TestFilesystem(unittest.TestCase):
         res = filesystem.list_dir_recursively('/Users/jsrdzhk/PycharmProjects', '.xml')
         print(res)
 
+    def test_add_executable(self):
+        print(os.stat(__file__).st_mode)
+        filesystem.add_executable(__file__)
+        print(os.stat(__file__).st_mode)
+
+    def test_remove_executable(self):
+        print(os.stat(__file__).st_mode)
+        filesystem.remove_executable(__file__)
+        print(os.stat(__file__).st_mode)
+
 
 if __name__ == '__main__':
     unittest.main()

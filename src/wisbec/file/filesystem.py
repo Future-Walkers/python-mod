@@ -7,6 +7,7 @@
 """
 import os
 import shutil
+import stat
 
 
 def is_directory_exist(dir_full_path) -> bool:
@@ -106,3 +107,29 @@ def list_dir_recursively(path: str, include_ext_name=None) -> list:
             if (include_ext_name is None) or (include_ext_name is not None and filepath.endswith(include_ext_name)):
                 res.append(filepath)
     return res
+
+
+def add_executable(file_path: str):
+    """
+    equivalent of chmod +x file_path,posix supported only,do not call it on windows
+    Args:
+        file_path:
+
+    Returns:
+
+    """
+    file_mode = os.stat(file_path).st_mode
+    os.chmod(file_path, file_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+
+def remove_executable(file_path: str):
+    """
+    equivalent of chmod -x file_path,posix supported only,do not call it on windows
+    Args:
+        file_path:
+
+    Returns:
+
+    """
+    file_mode = os.stat(file_path).st_mode
+    os.chmod(file_path, file_mode & ~stat.S_IXUSR & ~stat.S_IXGRP & ~stat.S_IXOTH)

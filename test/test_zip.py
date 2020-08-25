@@ -14,8 +14,8 @@ from wisbec.file import zip
 
 class TestZip(unittest.TestCase):
     def test_create_zip_file(self):
-        zip.create_zip_file(os.path.join(self.test_data_dir, 'test.zip'),
-                            os.path.join(os.path.pardir, 'wisbec'))
+        zip.zip_file(os.path.join(self.test_data_dir, 'test.zip'),
+                     os.path.join(os.path.pardir, 'wisbec'))
 
 
 if __name__ == '__main__':

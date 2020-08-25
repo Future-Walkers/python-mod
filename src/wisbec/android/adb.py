@@ -14,6 +14,11 @@ from wisbec.logging.log import Log
 
 
 class Adb(object):
+    adb_path = None
+
+    @classmethod
+    def init(cls, adb_path):
+        cls.adb_path = adb_path
 
     @staticmethod
     def devices(alive: bool = False) -> [str]:
@@ -45,14 +50,17 @@ class Adb(object):
         pass
 
     # return: code, out, err
-    @staticmethod
-    def exec(*args):
+    @classmethod
+    def exec(cls, *args):
         """
         执行命令
         :param args: 命令
         :return: 输出结果
         """
-        args = ['adb'] + list(args)
+        if cls.adb_path is not None:
+            args = [cls.adb_path] + list(args)
+        else:
+            args = ['adb'] + list(args)
         code, out, err = exec_cmd(args)
         return code, out, err
 
