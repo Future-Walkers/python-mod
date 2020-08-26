@@ -70,6 +70,11 @@ class Adb(object):
         return code, out, err
 
     @staticmethod
+    def su_shell(device_id, *args):
+        code, out, err = Adb.exec('-s', device_id, 'shell', 'su', '0', *args)
+        return code, out, err
+
+    @staticmethod
     def top_app(device_id):
         code, out, err = Adb.shell(device_id,
                                    "dumpsys", "activity", "top", "|", "grep", "^TASK", "-A", "1")

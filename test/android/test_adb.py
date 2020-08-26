@@ -12,12 +12,16 @@ from wisbec.android.adb import Adb
 
 class TestAdb(unittest.TestCase):
     def setUp(self) -> None:
-        Adb.init('/Users/jsrdzhk/workspace/Tweezer/tweezer/tweezer/resource/installation_pkg/adb_tool/platform-tools'
-                 '/adb')
+        if len(Adb.devices(True)) == 0:
+            Adb.init('/Users/jsrdzhk/workspace/Tweezer/tweezer/'
+                     'tweezer/resource/installation_pkg/adb_tool/platform-tools/adb')
 
     def test_adb_devices(self):
         print(Adb.exec('version'))
         print(Adb.devices(True))
+
+    def test_su_shell(self):
+        print(Adb.su_shell(Adb.devices(True)[0], 'id'))
 
 
 if __name__ == '__main__':
