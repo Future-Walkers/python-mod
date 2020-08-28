@@ -23,6 +23,12 @@ class TestAdb(unittest.TestCase):
     def test_su_shell(self):
         print(Adb.su_shell(Adb.devices(True)[0], 'id'))
 
+    def test_top_app(self):
+        print(Adb.top_app(Adb.devices(True)[0]))
+
+    def test_get_sdk_level(self):
+        print(Adb.get_sdk_level(Adb.devices(True)[0]))
+
 
 if __name__ == '__main__':
     unittest.main()
