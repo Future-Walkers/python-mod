@@ -17,9 +17,18 @@ with open('README.md', 'r') as f:
 with open('LICENSE') as f:
     lic = f.read()
 
+
+def find_version(file_name):
+    with open(file_name) as file_handle:
+        lines = file_handle.readlines()
+        latest_version = lines[0].strip("\n").rstrip(']').lstrip('[')
+        print("Mario:", latest_version)
+        return latest_version
+
+
 setuptools.setup(
     name='wisbec',
-    version='0.1.4',
+    version=find_version('./ChangeLog'),
     author='rodneycheung',
     author_email='jsrdzhk@gmail.com',
     description='python wrappers',

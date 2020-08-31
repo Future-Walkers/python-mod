@@ -37,6 +37,12 @@ def get_ip_from_url(url):
     return addr[0][4][0]
 
 
+def get_domain_from_url(url: str) -> str:
+    netloc = urlparse(url).netloc
+    domain = netloc.split(":")[0]
+    return domain
+
+
 def check_url_access(url: str, user_agent: tuple) -> bool:
     """
     check if url accessible
