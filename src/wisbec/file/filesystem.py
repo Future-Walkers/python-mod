@@ -109,6 +109,23 @@ def list_dir_recursively(path: str, include_ext_name=None) -> list:
     return res
 
 
+def list_dir(path: str, depth=1, include_ext_name=None) -> list:
+    files = os.listdir(path)
+    res = list()
+    if depth <= 0:
+        return res
+    for file in files:
+        filepath = os.path.join(path, file)
+        if os.path.isdir(filepath):
+            depth -= 1
+            res.extend(list_dir(filepath, depth, include_ext_name))
+            depth += 1
+        else:
+            if (include_ext_name is None) or (include_ext_name is not None and filepath.endswith(include_ext_name)):
+                res.append(filepath)
+    return res
+
+
 def add_executable(file_path: str):
     """
     equivalent of chmod +x file_path,posix supported only,do not call it on windows

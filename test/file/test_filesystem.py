@@ -49,6 +49,10 @@ class TestFilesystem(unittest.TestCase):
         res = filesystem.list_dir_recursively('/Users/jsrdzhk/PycharmProjects', '.xml')
         print(res)
 
+    def test_list_dir(self):
+        res = filesystem.list_dir('/Users/jsrdzhk/workspace', depth=3, include_ext_name='.py')
+        print(res)
+
     def test_add_executable(self):
         print(os.stat(__file__).st_mode)
         filesystem.add_executable(__file__)
