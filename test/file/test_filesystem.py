@@ -53,6 +53,9 @@ class TestFilesystem(unittest.TestCase):
         res = filesystem.list_dir('/Users/jsrdzhk/workspace', depth=3, include_ext_name='.py')
         print(res)
 
+    def test_list_dirs_on_dir(self):
+        print(filesystem.list_dirs_on_dir('/Users/jsrdzhk/workspace'))
+
     def test_add_executable(self):
         print(os.stat(__file__).st_mode)
         filesystem.add_executable(__file__)

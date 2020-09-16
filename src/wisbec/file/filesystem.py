@@ -8,6 +8,7 @@
 import os
 import shutil
 import stat
+from typing import List
 
 
 def is_directory_exist(dir_full_path) -> bool:
@@ -123,6 +124,16 @@ def list_dir(path: str, depth=1, include_ext_name=None) -> list:
         else:
             if (include_ext_name is None) or (include_ext_name is not None and filepath.endswith(include_ext_name)):
                 res.append(filepath)
+    return res
+
+
+def list_dirs_on_dir(path: str) -> List[str]:
+    files = os.listdir(path)
+    res = list()
+    for file in files:
+        filepath = os.path.join(path, file)
+        if os.path.isdir(filepath):
+            res.append(filepath)
     return res
 
 

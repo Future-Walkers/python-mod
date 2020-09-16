@@ -1,7 +1,11 @@
+[0.1.7]
+    Features:
+    1.add list_dirs_on_dir func
+
 [0.1.6]
-    Feature:
+    Features:
     1.add list_dir function
 
 [0.1.5]
-    Feature:
+    Features:
     1.add get domain from url function
