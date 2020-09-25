@@ -6,8 +6,8 @@
 # Time       ：2020/8/19 15:15
 # Author     ：Rodney Cheung
 """
-import subprocess
 import os
+import subprocess
 
 from wisbec import path
 

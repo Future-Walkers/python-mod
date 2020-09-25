@@ -6,13 +6,11 @@
 # Time       ：2020/8/19 15:09
 # Author     ：Rodney Cheung
 """
-
+import os
 import time
-from typing import Optional
 
 from wisbec.console.shell import exec_cmd
 from wisbec.logging.log import Log
-from wisbec import system
 
 
 class AdbException(Exception):
@@ -98,9 +96,9 @@ class Adb(object):
                                    "dumpsys", "activity", "top", "|", "grep", "^TASK", "-A", "0")
         sdk_level = Adb.get_sdk_level(device_id)
         if sdk_level >= 26:
-            current_app: str = out.strip().split(system.get_newline_ch())[-1].strip()
+            current_app: str = out.strip().split(os.linesep)[-1].strip()
         else:
-            current_app: str = out.strip().split(system.get_newline_ch())[0].strip()
+            current_app: str = out.strip().split(os.linesep)[0].strip()
         return current_app.split(' ')[1]
 
     @staticmethod

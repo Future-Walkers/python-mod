@@ -1,3 +1,8 @@
+[0.1.8]
+    Features:
+    1.add get pkg name from apk file func
+    2.rm redundant code
+
 [0.1.7]
     Features:
     1.add list_dirs_on_dir func
