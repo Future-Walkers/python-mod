@@ -22,7 +22,7 @@ def find_version(file_name):
     with open(file_name) as file_handle:
         lines = file_handle.readlines()
         latest_version = lines[0].strip("\n").rstrip(']').lstrip('[')
-        print("Mario:", latest_version)
+        print("wisbec:", latest_version)
         return latest_version
 
 

@@ -8,6 +8,7 @@
 """
 import os
 import subprocess
+from typing import AnyStr
 
 from wisbec import path
 
@@ -19,7 +20,7 @@ def __decode(content):
         return content.decode('gb2312')
 
 
-def exec_cmd(cmd, cwd=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
+def exec_cmd(cmd, cwd=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False) -> (int, AnyStr, AnyStr):
     try:
         subp = subprocess.Popen(cmd, shell=shell, stdout=stdout, stderr=stderr, cwd=cwd)
     except Exception as e:

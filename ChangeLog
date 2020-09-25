@@ -1,3 +1,7 @@
+[0.1.9]
+    Features:
+    1.adjust some adb function
+
 [0.1.8]
     Features:
     1.add get pkg name from apk file func
