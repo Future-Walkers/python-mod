@@ -1,3 +1,10 @@
+'''
+Author: Sphantix Hang
+Date: 2020-10-08 08:54:31
+LastEditors: Sphantix Hang
+LastEditTime: 2020-10-08 11:48:35
+FilePath: /python-mod/setup.py
+'''
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
@@ -5,12 +12,12 @@
 # Time       ：2020/8/19 15:53
 # Author     ：Rodney Cheung
 """
+
+
 from glob import glob
 from os.path import basename
 from os.path import splitext
-
 import setuptools
-
 with open('README.md', 'r') as f:
     long_description = f.read()
 
@@ -40,7 +47,7 @@ setuptools.setup(
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     platforms=['any'],
-    install_requires=['sshtunnel', 'pymysql', 'colorlog'],
+    install_requires=['sshtunnel', 'pymysql', 'colorlog', 'DBUtils'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

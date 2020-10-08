@@ -1,15 +1,12 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+
 '''
 Author: Sphantix Hang
 Date: 2020-10-08 09:21:48
 LastEditors: Sphantix Hang
-LastEditTime: 2020-10-08 09:29:52
+LastEditTime: 2020-10-08 11:56:54
 '''
-#!/usr/bin/env python3
-# -*- coding: UTF-8 -*-
-
-# Author: Sphantix
-# Mail: sphantix@gmail.cn
-# created time: 四 08 10 2020 09:22:13 上午 CST
 
 import threading
 

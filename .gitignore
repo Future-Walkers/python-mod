@@ -1,5 +1,6 @@
 build/
 dist/
+log/
 wisbec.egg-info/
 __pycache__/
 .idea
