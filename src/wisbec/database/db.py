@@ -5,10 +5,13 @@
 @Author  : Rodney Cheung
 @File    : db.py
 """
-import sqlite3
 
+
+import sqlite3
 import pymysql
 from sshtunnel import SSHTunnelForwarder
+from wisbec.design_patterns.singleton import SingletonType
+from dbutils.pooled_db import PooledDB
 
 
 class DataBase(object):
@@ -79,3 +82,55 @@ class MySqlDataBase(DataBase):
         self.connection.close()
         if self.tunnel is not None:
             self.tunnel.stop()
+
+
+class MySqlDataBaseWithConnectionPool(metaclass=SingletonType):
+    __connection_pool = None
+
+    def __init__(self,
+                 username,
+                 password,
+                 host,
+                 port,
+                 database_name,
+                 raise_on_warnings=True):
+        self.username = username
+        self.password = password
+        self.host = host
+        self.port = port
+        self.database_name = database_name
+        self.raise_on_warnings = raise_on_warnings
+        self.tunnel = None
+
+    # 创建数据库连接conn和游标cursor
+    def __enter__(self):
+        self.conn = self.__get_conn()
+        self.cursor = self.conn.cursor()
+
+    # 创建数据库连接池
+    def __get_conn(self):
+        if self.__connection_pool is None:
+            self.__connection_pool = PooledDB(
+                creator=pymysql,
+                maxconnections=100,
+                blocking=True,
+                host=self.host,
+                port=self.port,
+                user=self.username,
+                passwd=self.password,
+                db=self.database_name,
+                use_unicode=False,
+                charset='utf8'
+            )
+        return self.__connection_pool.connection()
+
+    # 释放连接池资源
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.cursor.close()
+        self.conn.close()
+
+    # 从连接池中取出一个连接
+    def getconn(self):
+        conn = self.__get_conn()
+        cursor = conn.cursor()
+        return cursor, conn
