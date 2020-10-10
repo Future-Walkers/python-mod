@@ -5,7 +5,7 @@
 Author: Sphantix Hang
 Date: 2020-10-10 11:23:02
 LastEditors: Sphantix Hang
-LastEditTime: 2020-10-10 11:41:38
+LastEditTime: 2020-10-10 11:46:31
 FilePath: /python-mod/src/wisbec/decorator/__init__.py
 '''
 
@@ -13,7 +13,7 @@ from functools import wraps
 from time import time
 
 
-def timit(f):
+def timeit(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         start = time()
