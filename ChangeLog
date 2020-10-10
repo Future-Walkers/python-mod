@@ -1,3 +1,7 @@
+[0.1.12]
+    Bug Fix:
+    1. fix timer decorator bug: can not accept function arguments
+
 [0.1.11]
     Features:
     1. add timer decorator

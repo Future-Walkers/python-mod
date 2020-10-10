@@ -5,17 +5,20 @@
 Author: Sphantix Hang
 Date: 2020-10-10 11:23:02
 LastEditors: Sphantix Hang
-LastEditTime: 2020-10-10 11:24:42
+LastEditTime: 2020-10-10 11:41:38
 FilePath: /python-mod/src/wisbec/decorator/__init__.py
 '''
 
-import time
+from functools import wraps
+from time import time
 
-def timer(func):
-    def inner():
-        start_time = time.time()
-        res = func()
-        end_time = time.time()
-        print("函数的运行时间：{}".format(end_time - start_time))
-        return  res
-    return inner
+
+def timit(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        start = time()
+        result = f(*args, **kwargs)
+        end = time()
+        print('Elapsed time: {} sec'.format(end-start))
+        return result
+    return wrapper
