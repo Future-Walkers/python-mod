@@ -91,12 +91,12 @@ class Adb(object):
     @staticmethod
     def top_app(device_id: str, sdk_level: int) -> str:
         code, out, err = Adb.shell(device_id,
-                                   "dumpsys", "activity", "top", "|", "grep", "^TASK", "-A", "0")
+                                   "dumpsys", "activity", "top", "|", "grep", "^TASK", "-A", "1")
         if sdk_level >= 26:
             current_app: str = out.strip().split(os.linesep)[-1].strip()
         else:
-            current_app: str = out.strip().split(os.linesep)[0].strip()
-        return current_app.split(' ')[1]
+            current_app: str = out.strip().split(os.linesep)[1].strip()
+        return current_app.split(' ')[1].split('/')[0]
 
     @staticmethod
     def screen_cap(device_id: str, save_path: str) -> bool:

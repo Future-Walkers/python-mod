@@ -24,7 +24,8 @@ class TestAdb(unittest.TestCase):
         print(Adb.su_shell(Adb.devices(True)[0], 'id'))
 
     def test_top_app(self):
-        print(Adb.top_app(Adb.devices(True)[0]))
+        device_id = Adb.devices(True)[0]
+        print(Adb.top_app(device_id, Adb.get_sdk_level(device_id)))
 
     def test_get_sdk_level(self):
         print(Adb.get_sdk_level(Adb.devices(True)[0]))
