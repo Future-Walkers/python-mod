@@ -15,7 +15,7 @@ import traceback
 
 from colorlog import ColoredFormatter
 
-from wisbec.file import filesystem
+from wisbec.filesystem.filesystem import FilesystemUtil
 
 
 class MyLogger(logging.Logger):
@@ -87,7 +87,7 @@ class Log:
 
     @classmethod
     def __init_log_dir(cls, log_dir):
-        filesystem.create_directories(log_dir)
+        FilesystemUtil.create_directories(log_dir)
         cls.log_dir = log_dir
         cls.log_debug_path = os.path.join(log_dir, "debug.log")
         cls.log_info_path = os.path.join(log_dir, "info.log")

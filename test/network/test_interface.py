@@ -12,7 +12,9 @@ from wisbec.network.interface import Interface
 
 class TestInterface(unittest.TestCase):
     def test_get_active_interfaces(self):
-        print(Interface.get_active_interfaces())
+        interfaces = Interface.get_active_interfaces()
+        for interface in interfaces:
+            print(interface.m_ip_addr)
 
 
 if __name__ == '__main__':

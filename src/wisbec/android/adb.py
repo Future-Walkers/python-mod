@@ -141,3 +141,15 @@ class Adb(object):
             raise AdbException('get device sdk level exception:{0}'.format(err))
         else:
             return int(out.strip())
+
+    @staticmethod
+    def get_system_packages(device_id: str) -> List[str]:
+        code, out, err = Adb.shell(device_id, 'pm', 'list', 'packages', '-s')
+        if code != 0:
+            raise AdbException('get system packages exception:{0}'.format(err))
+        else:
+            packages: List[str] = out.split(os.linesep)
+            system_packages = list()
+            for package in packages:
+                system_packages.append(package.split(':')[-1])
+            return system_packages

@@ -9,9 +9,11 @@
 import shutil
 
 
-def zip_file(output_full_path, input_dir):
-    shutil.make_archive(output_full_path, 'zip', input_dir)
+class ZipUtil:
+    @staticmethod
+    def zip_file(src_path, dst_path):
+        shutil.make_archive(src_path, 'zip', dst_path)
 
-
-def unzip_file(filename, dest_dir=None, fmt=None):
-    shutil.unpack_archive(filename, dest_dir, fmt)
+    @staticmethod
+    def unzip_file(src_zip, dst_dir=None, fmt=None):
+        shutil.unpack_archive(src_zip, dst_dir, fmt)

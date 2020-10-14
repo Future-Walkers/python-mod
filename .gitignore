@@ -5,3 +5,4 @@ wisbec.egg-info/
 __pycache__/
 .idea
 src/mod.egg-info/
+.DS_Store

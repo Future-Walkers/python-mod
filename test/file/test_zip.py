@@ -9,13 +9,22 @@
 import os
 import unittest
 
-from wisbec.file import zip
+from test.testdata.test_util import TestUtil
+from wisbec.file.zip import ZipUtil
+from wisbec.filesystem.filesystem import FilesystemUtil
 
 
 class TestZip(unittest.TestCase):
-    def test_create_zip_file(self):
-        zip.zip_file(os.path.join(self.test_data_dir, 'test.zip'),
-                     os.path.join(os.path.pardir, 'wisbec'))
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.test_data_dir = os.path.join(TestUtil.get_test_data_path(), 'file', 'zip')
+
+    def test_zip_and_unzip_file(self):
+        ZipUtil.zip_file(os.path.join(self.test_data_dir, 'test2.xml'),
+                         self.test_data_dir)
+        zipped_file_path = os.path.join(self.test_data_dir, 'test2.xml.zip')
+        ZipUtil.unzip_file(zipped_file_path, self.test_data_dir)
+        FilesystemUtil.remove(zipped_file_path)
 
 
 if __name__ == '__main__':

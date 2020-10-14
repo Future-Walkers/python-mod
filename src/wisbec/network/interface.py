@@ -7,14 +7,21 @@
 # Author     ：Rodney Cheung
 """
 import re
-import sys
+from typing import List
 
+from wisbec import system
 from wisbec.console import shell
+
+
+class InterfaceInfo:
+    def __init__(self, iface_name, ip_addr):
+        self.m_ip_addr: str = ip_addr
+        self.m_iface_name: str = iface_name
 
 
 class Interface:
     @classmethod
-    def __get_interface_from_ifconfig(cls) -> list:
+    def __get_interface_from_ifconfig(cls) -> List[InterfaceInfo]:
         """
         enx000ec6c0c623: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
                 ether 00:0e:c0:c0:56:23  txqueuelen 1000  (Ethernet)
@@ -31,7 +38,7 @@ class Interface:
                 TX packets 1134271  bytes 1046040386 (1.0 GB)
                 TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
         """
-        list_interface = []
+        iface_info_list: List[InterfaceInfo] = list()
         code, out, err = shell.exec_cmd('ifconfig')
         out = out.replace('\n\n', '\n')
         list_blocks = re.split('\n[a-zA-Z0-9]', out)
@@ -40,11 +47,13 @@ class Interface:
                 continue
             iface_name = re.search(r'(\S+):', block).groups()[0]
             iface_ip = re.search(r'inet (\S+) ', block).groups()[0].replace('addr:', '')
-            list_interface.append((iface_name, iface_ip))
-        return list_interface
+            if iface_ip == '127.0.0.1':
+                continue
+            iface_info_list.append(InterfaceInfo(iface_name, iface_ip))
+        return iface_info_list
 
     @classmethod
-    def __get_interface_from_ipconfig(cls) -> list:
+    def __get_interface_from_ipconfig(cls) -> List[InterfaceInfo]:
         """
         Windows IP Configuration
 
@@ -70,10 +79,10 @@ class Interface:
            Media State . . . . . . . . . . . : Media disconnected
            Connection-specific DNS Suffix  . :
         """
-        interface_list = []
+        iface_info_list: List[InterfaceInfo] = list()
         code, out, err = shell.exec_cmd(['cmd.exe', '/c', 'chcp 65001 & ipconfig'])
         if code != 0:
-            return interface_list
+            return iface_info_list
         out = re.sub(r'(\r\n){2,}', r'\r\n', out)
         list_blocks = re.split(r'\r\n[a-zA-Z0-9]', out)
         for block in list_blocks:
@@ -87,20 +96,21 @@ class Interface:
             search_res_span = search_res.span()
             ip_addr = block[search_res_span[0]:search_res_span[1]]
             ip_addr = ip_addr.split(': ')[-1]
-            interface_list.append((iface_name, ip_addr))
-        return interface_list
+            if ip_addr == '127.0.0.1':
+                continue
+            iface_info_list.append(InterfaceInfo(iface_name, ip_addr))
+        return iface_info_list
 
     @classmethod
-    def get_active_interfaces(cls) -> list:
+    def get_active_interfaces(cls) -> List[InterfaceInfo]:
         """
         get active net interface,support mac os,linux an windows
         Returns:
             [(iface_name1,iface_ip1),...]
         """
-        current_os = sys.platform
-        if current_os == 'win32':
+        if system.is_windows():
             return cls.__get_interface_from_ipconfig()
-        elif current_os == 'darwin' or current_os == 'linux':
+        elif system.is_mac_os() or system.is_linux():
             return cls.__get_interface_from_ifconfig()
         else:
             return []

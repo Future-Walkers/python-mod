@@ -14,9 +14,9 @@ import unittest
 class TestDbUtils(unittest.TestCase):
     def test_connect_by_ssh_tunnel(self):
         mysql_db = MySqlDataBase('sherry', 'sherry', '192.168.37.5', 3306, 'sherry',
-                                True)
+                                 True)
         mysql_db.connect_by_ssh_tunnel('192.168.49.59', 22, 'ubuntu',
-                                      '/Users/rodneycheung/.ssh/id_rsa')
+                                       '/Users/rodneycheung/.ssh/id_rsa')
         query = 'SELECT count(TABLE_NAME) FROM information_schema.TABLES WHERE TABLE_SCHEMA=\'sherry\''
         with mysql_db.connection.cursor() as cursor:
             cursor.execute(query)

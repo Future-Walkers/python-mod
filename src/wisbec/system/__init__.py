@@ -7,13 +7,6 @@ MAC_OS = 'darwin'
 LINUX = 'linux'
 
 
-def get_newline_ch() -> str:
-    if current_os == WINDOWS:
-        return '\r\n'
-    else:
-        return '\n'
-
-
 def is_windows() -> bool:
     return current_os == WINDOWS
 
