@@ -9,21 +9,19 @@
 """
 
 import logging
-import os
 import unittest
 
 from wisbec.logging.log import Log
 
 
 class TestLog(unittest.TestCase):
-    def setUp(self):
-        Log.init_logger(os.path.join(os.getcwd(), 'log'))
-        self.assertEqual(Log.is_log_to_file, True)
-        self.assertEqual(Log.is_log_to_console, True)
+    @classmethod
+    def setUpClass(cls) -> None:
+        Log.init_logger(is_log_to_file=False)
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(cls) -> None:
         Log.close()
-        self.assertEqual(len(Log.file_loggers), 0)
 
     def test_debug(self):
         log_content = 'test_debug{}{}'

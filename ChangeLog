@@ -1,3 +1,7 @@
+[0.1.16]
+    Features:
+    1.do not create log dir if only log to console
+
 [0.1.15]
     Features:
     1.add testdata

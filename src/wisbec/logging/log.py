@@ -86,7 +86,7 @@ class Log:
     }
 
     @classmethod
-    def __init_log_dir(cls, log_dir):
+    def __init_log_dir(cls, log_dir: str):
         FilesystemUtil.create_directories(log_dir)
         cls.log_dir = log_dir
         cls.log_debug_path = os.path.join(log_dir, "debug.log")
@@ -105,10 +105,10 @@ class Log:
     @classmethod
     def __init_log_handler(
             cls,
-            is_log_to_file,
-            is_log_to_console,
-            console_log_name,
-            console_log_level):
+            is_log_to_file: bool,
+            is_log_to_console: bool,
+            console_log_name: str,
+            console_log_level: int):
         cls.is_log_to_console = is_log_to_console
         if is_log_to_console:
             cls.console_handler = logging.StreamHandler()
@@ -141,7 +141,8 @@ class Log:
         Returns:
             None
         """
-        cls.__init_log_dir(log_dir)
+        if is_log_to_file:
+            cls.__init_log_dir(log_dir)
         cls.__init_log_handler(
             is_log_to_file,
             is_log_to_console,
@@ -225,7 +226,7 @@ class Log:
         cls.file_loggers.update({log_level: file_logger})
 
     @classmethod
-    def set_console_log_level(cls, log_level):
+    def set_console_log_level(cls, log_level: int):
         cls.console_handler.setLevel(log_level)
 
     @classmethod
