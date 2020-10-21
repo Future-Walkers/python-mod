@@ -26,6 +26,18 @@ class Adb(object):
     adb_path: str = ''
 
     @classmethod
+    def __get_su_cmd(cls, device_id: str) -> str:
+        code, out, err = Adb.shell(device_id, 'su', '-c', 'id', '-Z')
+        if code != 0:
+            su_cmd = '0'
+        else:
+            if 'magisk' in out:
+                su_cmd = '-c'
+            else:
+                su_cmd = '0'
+        return su_cmd
+
+    @classmethod
     def init(cls, adb_path: str):
         cls.adb_path = adb_path
 
@@ -76,17 +88,17 @@ class Adb(object):
     def shell(device_id: str, *args) -> (int, AnyStr, AnyStr):
         return Adb.exec('-s', device_id, 'shell', *args)
 
-    @staticmethod
-    def su_shell(device_id: str, *args) -> (int, AnyStr, AnyStr):
-        code, out, err = Adb.shell(device_id, 'su', '-c', 'id', '-Z')
+    @classmethod
+    def su_shell(cls, device_id: str, *args) -> (int, AnyStr, AnyStr):
+        code, out, err = cls.shell(device_id, 'id')
         if code != 0:
-            su_cmd = '0'
+            raise AdbException('check device is rooted exception:{0}'.format(err))
         else:
-            if 'magisk' in out:
-                su_cmd = '-c'
+            if '(root)' in out:
+                return cls.shell(device_id, *args)
             else:
-                su_cmd = '0'
-        return Adb.exec('-s', device_id, 'shell', 'su', su_cmd, *args)
+                su_cmd = cls.__get_su_cmd(device_id)
+                return Adb.shell(device_id, 'su', su_cmd, *args)
 
     @staticmethod
     def top_app(device_id: str, sdk_level: int) -> str:
@@ -153,3 +165,36 @@ class Adb(object):
             for package in packages:
                 system_packages.append(package.split(':')[-1])
             return system_packages
+
+    @classmethod
+    def is_rooted(cls, device_id: str) -> bool:
+        code, out, err = cls.shell(device_id, 'id')
+        if code != 0:
+            raise AdbException('check device is rooted exception:{0}'.format(err))
+        else:
+            if '(root)' in out:
+                return True
+            else:
+                code, out, err = cls.su_shell(device_id, 'id')
+                if code != 0:
+                    raise AdbException('check device is rooted exception:{0}'.format(err))
+                else:
+                    return '(root)' in out
+
+    @classmethod
+    def is_system_partition_rw(cls, device_id: str):
+        code, out, err = cls.shell(device_id, 'mount')
+        if code != 0:
+            raise AdbException('get device mount info failed:{}'.format(err))
+        else:
+            mount_info_list = out.split(os.linesep)
+            for mount_info in mount_info_list:
+                components = mount_info.split(' ')
+                partition = components[2]
+                fs_type = components[4]
+                fs_auth = components[5]
+                if partition == '/system' or partition == '/':
+                    if fs_type == 'ext4':
+                        if 'rw' in fs_auth:
+                            return True
+            return False

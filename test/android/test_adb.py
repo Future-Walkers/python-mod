@@ -22,6 +22,11 @@ class TestAdb(unittest.TestCase):
     def test_su_shell(self):
         print(Adb.su_shell(self.device_id, 'id'))
 
+    def test_shell(self):
+        print(Adb.shell(self.device_id, 'am', 'startservice', '-n' 'org.proxydroid/.ProxyDroidService', '--es',
+                        'proxyType', 'http', '--es', 'host', '10.251.0.219', '--ei', 'port', '6666', '--ez',
+                        'tweezer.isTweezer', 'true', '--es', 'tweezer.proxyApp', 'com.ttyouqu.app'))
+
     def test_top_app(self):
         print(Adb.top_app(self.device_id, Adb.get_sdk_level(self.device_id)))
 
@@ -30,6 +35,12 @@ class TestAdb(unittest.TestCase):
 
     def test_get_system_packages(self):
         print(Adb.get_system_packages(self.device_id))
+
+    def test_is_rooted(self):
+        print(Adb.is_rooted(self.device_id))
+
+    def test_is_system_partition_rw(self):
+        print(Adb.is_system_partition_rw(self.device_id))
 
 
 if __name__ == '__main__':
