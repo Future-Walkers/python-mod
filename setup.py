@@ -5,7 +5,7 @@ LastEditors: Sphantix Hang
 LastEditTime: 2020-10-08 11:48:35
 FilePath: /python-mod/setup.py
 '''
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
 # File       : setup.py
@@ -13,11 +13,11 @@ FilePath: /python-mod/setup.py
 # Author     ：Rodney Cheung
 """
 
-
 from glob import glob
 from os.path import basename
 from os.path import splitext
 import setuptools
+
 with open('README.md', 'r') as f:
     long_description = f.read()
 
@@ -66,4 +66,8 @@ setuptools.setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Utilities',
     ],
+    package_data={
+        '': ['installation_pkg/android-tool.apk']
+    },
+    include_package_data=True,
     zip_safe=False)

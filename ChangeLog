@@ -1,3 +1,7 @@
+[0.2.0]
+    Feature:
+    1.add some adb function
+
 [0.1.17]
     Features:
     1.add check device rooted function
