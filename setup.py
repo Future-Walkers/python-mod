@@ -1,8 +1,8 @@
 '''
 Author: Sphantix Hang
 Date: 2020-10-08 08:54:31
-LastEditors: Sphantix Hang
-LastEditTime: 2020-10-08 11:48:35
+last_author: Sphantix Hang
+last_edit_time: 2020-11-30 11:52:31
 FilePath: /python-mod/setup.py
 '''
 # !/usr/bin/env python3
@@ -32,6 +32,13 @@ def find_version(file_name):
         print("wisbec:", latest_version)
         return latest_version
 
+def get_requirements(file_name):
+    with open(file_name) as f:
+        lines = f.readlines()
+        requirements = []
+        for line in lines:
+            requirements.append(line.strip("\n"))
+        return requirements
 
 setuptools.setup(
     name='wisbec',
@@ -47,7 +54,7 @@ setuptools.setup(
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     platforms=['any'],
-    install_requires=['sshtunnel', 'pymysql', 'colorlog', 'DBUtils'],
+    install_requires=get_requirements("./requirements.txt"),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
