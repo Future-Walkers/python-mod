@@ -8,3 +8,8 @@ Useful modules for python
 ```shell script
 pip install -U wisbec
 ```
+
+## Upload to pypi
+
+1. Modify ChangeLog
+2. run `pypi_upload.sh`

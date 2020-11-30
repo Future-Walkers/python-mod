@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-"""
-# File       : url.py
-# Time       ：2020/8/19 15:15
-# Author     ：Rodney Cheung
-"""
+
+'''
+Author: Sphantix Hang
+date: 2020-11-30 11:04:01
+last_author: Sphantix Hang
+last_edit_time: 2020-11-30 11:36:51
+FilePath: /python-mod/src/wisbec/network/url.py
+'''
 import random
 import socket
+import tldextract
 import urllib.request
 from urllib.parse import urlparse
 
@@ -40,8 +44,8 @@ class UrlUtil:
 
     @staticmethod
     def get_domain_from_url(url: str) -> str:
-        netloc = urlparse(url).netloc
-        domain = netloc.split(":")[0]
+        ext = tldextract.extract(url)
+        domain = '.'.join([ext.domain, ext.suffix])
         return domain
 
     @staticmethod
