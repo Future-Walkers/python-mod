@@ -7,6 +7,7 @@
 # Author     ：Rodney Cheung
 """
 import unittest
+
 from wisbec.android.adb import Adb
 
 
@@ -35,8 +36,11 @@ class TestAdb(unittest.TestCase):
     def test_get_sdk_level(self):
         print(Adb.get_sdk_level(self.device_id))
 
-    def test_get_system_packages(self):
-        print(Adb.get_system_packages(self.device_id))
+    def test_get_installed_packages(self):
+        installed_apps = Adb.get_installed_packages(self.device_id)
+        system_apps = Adb.get_system_packages(self.device_id)
+        user_installed_apps = Adb.get_user_installed_packages(self.device_id)
+        self.assertEqual(len(installed_apps), len(system_apps) + len(user_installed_apps))
 
     def test_is_rooted(self):
         print(Adb.is_rooted(self.device_id))

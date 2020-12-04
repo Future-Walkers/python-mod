@@ -9,7 +9,7 @@
 import os
 import re
 import time
-from typing import List, AnyStr
+from typing import List, AnyStr, Set
 
 from wisbec.console.shell import exec_cmd
 from wisbec.logging.log import Log
@@ -174,16 +174,40 @@ class Adb(object):
         else:
             return int(out.strip())
 
+    @classmethod
+    def get_installed_packages(cls, device_id: str) -> Set[str]:
+        code, out, err = Adb.shell(device_id, 'pm', 'list', 'packages')
+        if code != 0:
+            raise AdbException('get system packages exception:{0}'.format(err))
+        else:
+            packages: List[str] = out.strip().split(os.linesep)
+            installed_packages = set()
+            for package in packages:
+                installed_packages.add(package.split(':')[-1])
+            return installed_packages
+
+    @classmethod
+    def get_user_installed_packages(cls, device_id: str) -> Set[str]:
+        code, out, err = Adb.shell(device_id, 'pm', 'list', 'packages', '-3')
+        if code != 0:
+            raise AdbException('get system packages exception:{0}'.format(err))
+        else:
+            packages: List[str] = out.strip().split(os.linesep)
+            user_installed_packages = set()
+            for package in packages:
+                user_installed_packages.add(package.split(':')[-1].strip())
+            return user_installed_packages
+
     @staticmethod
-    def get_system_packages(device_id: str) -> List[str]:
+    def get_system_packages(device_id: str) -> Set[str]:
         code, out, err = Adb.shell(device_id, 'pm', 'list', 'packages', '-s')
         if code != 0:
             raise AdbException('get system packages exception:{0}'.format(err))
         else:
-            packages: List[str] = out.split(os.linesep)
-            system_packages = list()
+            packages: List[str] = out.strip().split(os.linesep)
+            system_packages = set()
             for package in packages:
-                system_packages.append(package.split(':')[-1])
+                system_packages.add(package.split(':')[-1])
             return system_packages
 
     @classmethod
