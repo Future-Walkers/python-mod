@@ -13,7 +13,9 @@ from typing import List, AnyStr, Set
 
 from wisbec.console.shell import exec_cmd
 from wisbec.logging.log import Log
+from wisbec.parser.parse import Parser, InterfaceInfo
 from wisbec.resource.resource import PackageResource
+from wisbec.shell_parser.ps import PsParser
 
 
 class AdbException(Exception):
@@ -149,7 +151,10 @@ class Adb(object):
     @staticmethod
     def install(device_id: str, apk_path: str) -> bool:
         code, out, err = Adb.exec('-s', device_id, 'install', apk_path)
-        return 'Success' in out
+        if 'Success' in out:
+            return True
+        else:
+            raise AdbException(out + err)
 
     @staticmethod
     def id(device_id: str) -> int:
@@ -608,3 +613,21 @@ class Adb(object):
         if code != 0:
             raise AdbException('rm proxy failed:{}'.format(err))
         return True
+
+    @classmethod
+    def get_process(cls, device_id: str):
+        code, res1, err = Adb.su_shell(device_id, 'ps -A')
+        code, res2, err = Adb.su_shell(device_id, 'ps')
+        res = res1 if len(res1) > len(res2) else res2
+        return PsParser.get_process(res)
+
+    @classmethod
+    def start_app(cls, device_id: str, package_name: str):
+        code, out, err = cls.shell(device_id, 'monkey', '-p', package_name, '-c', 'android.intent.category.LAUNCHER',
+                                   '1')
+        return 'No activities found to run, monkey aborted' not in out
+
+    @classmethod
+    def get_ifaces(cls, device_id: str) -> List[InterfaceInfo]:
+        code, out, err = cls.shell(device_id, 'ifconfig')
+        return Parser.parse_ifconfig(out)

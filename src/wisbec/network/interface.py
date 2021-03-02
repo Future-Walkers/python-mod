@@ -11,12 +11,7 @@ from typing import List
 
 from wisbec import system
 from wisbec.console import shell
-
-
-class InterfaceInfo:
-    def __init__(self, iface_name, ip_addr):
-        self.m_ip_addr: str = ip_addr
-        self.m_iface_name: str = iface_name
+from wisbec.parser.parse import Parser, InterfaceInfo
 
 
 class Interface:
@@ -38,19 +33,20 @@ class Interface:
                 TX packets 1134271  bytes 1046040386 (1.0 GB)
                 TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
         """
-        iface_info_list: List[InterfaceInfo] = list()
+        # iface_info_list: List[InterfaceInfo] = list()
         code, out, err = shell.exec_cmd('ifconfig')
-        out = out.replace('\n\n', '\n')
-        list_blocks = re.split('\n[a-zA-Z0-9]', out)
-        for block in list_blocks:
-            if ('inet ' not in block) or ('loop ' in block):
-                continue
-            iface_name = re.search(r'(\S+):', block).groups()[0]
-            iface_ip = re.search(r'inet (\S+) ', block).groups()[0].replace('addr:', '')
-            if iface_ip == '127.0.0.1':
-                continue
-            iface_info_list.append(InterfaceInfo(iface_name, iface_ip))
-        return iface_info_list
+        return Parser.parse_ifconfig(out)
+        # out = out.replace('\n\n', '\n')
+        # list_blocks = re.split('\n[a-zA-Z0-9]', out)
+        # for block in list_blocks:
+        #     if ('inet ' not in block) or ('loop ' in block):
+        #         continue
+        #     iface_name = re.search(r'(\S+):', block).groups()[0]
+        #     iface_ip = re.search(r'inet (\S+) ', block).groups()[0].replace('addr:', '')
+        #     if iface_ip == '127.0.0.1':
+        #         continue
+        #     iface_info_list.append(InterfaceInfo(iface_name, iface_ip))
+        # return iface_info_list
 
     @classmethod
     def __get_interface_from_ipconfig(cls) -> List[InterfaceInfo]:

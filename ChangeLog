@@ -1,3 +1,7 @@
+[0.2.3]
+    Feature:
+    1. add some adb functions
+
 [0.2.2]
     BugFix:
     1. get requirements from requirements.txt

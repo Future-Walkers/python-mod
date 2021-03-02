@@ -67,6 +67,18 @@ class TestAdb(unittest.TestCase):
         print(Adb.grant_permission(self.device_id, self.mock_location_app_pkg_name,
                                    'android.permission.READ_PHONE_STATE'))
 
+    def test_get_process(self):
+        print(Adb.get_process(self.device_id))
+
+    def test_start_app(self):
+        print(Adb.start_app(self.device_id, 'com.weiqing.medivh'))
+        print(Adb.start_app(self.device_id, 'com.weiqing.medih'))
+
+    def test_get_iface(self):
+        ifaces = Adb.get_ifaces(self.device_id)
+        for iface in ifaces:
+            print('{0}:{1}'.format(iface.m_iface_name, iface.m_ip_addr))
+
 
 if __name__ == '__main__':
     unittest.main()
