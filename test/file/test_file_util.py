@@ -22,6 +22,9 @@ class TestFileUtil(unittest.TestCase):
         line = FileUtil.last_line(os.path.join(self.test_data_path, 'mitmproxy-ca-cert.pem'))
         self.assertEqual(line, '-----END CERTIFICATE-----')
 
+    def test_read_file_by_encoding(self):
+        print(FileUtil.read_file_by_encoding(os.path.join(self.test_data_path, 'mitmproxy-ca-cert.pem')))
+
 
 if __name__ == '__main__':
     unittest.main()

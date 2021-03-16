@@ -16,6 +16,7 @@ FilePath: /python-mod/setup.py
 from glob import glob
 from os.path import basename
 from os.path import splitext
+
 import setuptools
 
 with open('README.md', 'r') as f:
@@ -32,6 +33,7 @@ def find_version(file_name):
         print("wisbec:", latest_version)
         return latest_version
 
+
 def get_requirements(file_name):
     with open(file_name) as f:
         lines = f.readlines()
@@ -39,6 +41,7 @@ def get_requirements(file_name):
         for line in lines:
             requirements.append(line.strip("\n"))
         return requirements
+
 
 setuptools.setup(
     name='wisbec',
