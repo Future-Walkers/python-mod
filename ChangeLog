@@ -1,3 +1,7 @@
+[0.4.0]
+    Feature:
+    1. add algorithm module
+
 [0.3.0]
     Feature:
     1. add read file by encoding util
