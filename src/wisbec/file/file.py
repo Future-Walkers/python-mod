@@ -6,7 +6,7 @@
 # Time       ：2020/10/14 10:37
 # Author     ：Rodney Cheung
 """
-from typing import AnyStr
+from typing import AnyStr, Optional
 
 import chardet
 
@@ -37,20 +37,36 @@ class FileUtil:
         with open(file_path, encoding=file_encoding) as f:
             return f.read(bytes_num)
 
-    @staticmethod
-    def last_line(file_path: str) -> str:
+    @classmethod
+    def last_line(cls, file_path: str) -> Optional[str]:
         """
         get last line of file,line separator will be ignored
         Args:
             file_path: file file_path
         Returns:
-            content of last line,empty str if there is no content in file
+            content of last line,None if there is no content in file
         """
-        with open(file_path) as fp:
+        file_encoding = cls.get_file_encoding(file_path)
+        with open(file_path, encoding=file_encoding) as fp:
             lines = fp.readlines()
             if len(lines) == 0:
-                return ""
+                return None
             return lines[-1].strip()
+
+    @classmethod
+    def first_line(cls, file_path: str) -> Optional[str]:
+        """
+        get first line of file,line separator will be ignored
+        Args:
+            file_path: file file_path
+        Returns:
+            content of first line,None if there is no content in file
+        """
+        file_encoding = cls.get_file_encoding(file_path)
+        with open(file_path, encoding=file_encoding) as f:
+            for line in f:
+                return line.strip()
+            return None
 
     @staticmethod
     def write_file(path: str, mode: str, data: AnyStr):
